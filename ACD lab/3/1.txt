@@ -1,0 +1,19 @@
+Zkjbasfhi asfuh ilfu liasfugh ilfuash
+dfytf
+uhjdfutfuiy
+jdgab ughd
+hdfsab
+ijhi uadgiadgab	gsab ab
+
+agkigfigi
+aaaaa aaaaa	agvg	agcvg vfghvh vhjvhj vjhvv
+jfh.com
+sdfhigsdfi.com hguwevfcomsdgyugfiAWRAD45 ghwefu.comhfg
+JIGU
+main()
+{
+int num;
+scanf("%d",&num);
+if(num%2)printf("Odd");
+else printf("Even")
+}

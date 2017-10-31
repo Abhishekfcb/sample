@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Smiley Face</title>
+    </head>
+    <body>
+ <script>
+
+
+var canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+
+
+document.body.style.margin = 0;
+
+
+
+var ctx = canvas.getContext('2d');
+resize();
+
+
+var pos = { x:0, y:0 };
+
+window.addEventListener('resize', resize);
+document.addEventListener('mousemove', draw);
+document.addEventListener('mousedown', setPosition);
+document.addEventListener('mouseenter', setPosition);
+Dtext();
+function Dtext()
+{
+ctx.font = "200px Garamond";
+ctx.textAlign="center"; 
+var chr = String.fromCharCode((Math.floor(Math.random()*(25)+65)));
+ctx.fillText(chr,200,270);
+
+}
+
+function setPosition(e) {
+  pos.x = e.clientX;
+  pos.y = e.clientY;
+}
+
+
+function resize() {
+  ctx.canvas.width = 400;
+  ctx.canvas.height = 400;
+  canvas.style.border = '1px solid #000';
+  canvas.style.left ="50px";
+  canvas.style.top ="50px";
+}
+
+function draw(e) {
+  
+  if (e.buttons !== 1) return;
+
+  ctx.beginPath(); // begin
+
+  ctx.lineWidth = 5;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#ff6666';
+
+  ctx.moveTo(pos.x, pos.y); 
+  setPosition(e);
+  ctx.lineTo(pos.x, pos.y); 
+
+  ctx.stroke(); 
+	
+}
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var fiveMinutes = 60,
+        display = document.querySelector('#time');
+display.border= '1px solid #000';
+    startTimer(fiveMinutes, display);
+};
+
+	</script>
+<form  onreset="window.location.reload();">
+<br><br>
+    <div>Time Left: <span id="time">01:00</span></div><br><br>
+<input type="submit" value="Submit">
+<input type="reset" value="Clear">
+<br>
+</form>
+    </body>
+</html>

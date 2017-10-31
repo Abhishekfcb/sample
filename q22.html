@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Q2 Canvas</title>
+		<style type='text/css'>
+	        #sheet {
+	            border:1px solid black;
+	        }
+			input {
+				margin: 10%;
+				padding: 5%;
+				border-radius: 5px;
+				background-color: #ff6666;
+			}
+	    </style>
+	</head>
+
+	<body>
+		<header>
+			<h1>Q2</h1>
+		</header>
+
+		<div style="width: 25%; height:auto; float:left; text-align:center;">
+
+			<div style="width=inherit; border:1px solid black;">
+				<p id="timerP"><span id="countdowntimer"> 1:00 </span></p>
+			</div>
+
+			<br><br><br>
+
+			<input type="button" value="RESET" onclick="clearCanvas();" />
+			<input type="button" value="SUBMIT" onclick="stopTimer();"/>
+		</div>
+
+		<div style="width: 70%; float:right">
+			<canvas id="sheet" width="400" height="400"></canvas>
+		</div>
+
+	    <script type='text/javascript'>
+		"use strict";
+
+		var context = document.getElementById('sheet').getContext("2d");
+		var canvas = document.getElementById('sheet');
+		context = canvas.getContext("2d");
+
+		var alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+		function getRandomNum() {
+			while (true) {
+				var x = Math.floor((Math.random() * 100));
+				if (x >= 0 && x < 26) {
+					return x;
+				}
+			}
+		}
+
+		context.font = "100px Arial";
+		context.fillStyle = "#ff1a1a";
+		context.textAlign = "center";
+
+		var downloadTimer = null;
+
+		function clearCanvas() {
+			clearInterval(downloadTimer);
+			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+			context.fillText(alphabets[getRandomNum()],canvas.width/2,canvas.width/4);
+			// For timer
+			document.getElementById("countdowntimer").textContent = '1:00';
+			var timeleft = 60;
+			downloadTimer = setInterval(
+				function(){
+					timeleft--;
+					if (timeleft < 10){
+				        document.getElementById("countdowntimer").textContent = '0:0' + timeleft;
+			        } else {
+				        document.getElementById("countdowntimer").textContent = '0:' + timeleft;
+			        }
+					if(timeleft <= 0)
+						clearInterval(downloadTimer);
+				},
+				1000);
+		}
+		window.onload = clearCanvas();
+		function stopTimer() {
+			clearInterval(downloadTimer);
+		}
+
+		context.strokeStyle = "#ff6666";
+		context.lineJoin = "square	";
+		context.lineWidth = 5;
+
+		var clickX = [];
+		var clickY = [];
+		var clickDrag = [];
+		var paint;
+
+		/**
+		 * Add information where the user clicked at.
+		 * @param {number} x
+		 * @param {number} y
+		 * @return {boolean} dragging
+		 */
+		function addClick(x, y, dragging) {
+			clickX.push(x);
+			clickY.push(y);
+			clickDrag.push(dragging);
+		}
+
+
+		/**
+		 * Draw the newly added point.
+		 * @return {void}
+		 */
+		function drawNew() {
+			var i = clickX.length - 1
+			if (!clickDrag[i]) {
+				if (clickX.length == 0) {
+					context.beginPath();
+					context.moveTo(clickX[i], clickY[i]);
+					context.stroke();
+				} else {
+					context.closePath();
+
+					context.beginPath();
+					context.moveTo(clickX[i], clickY[i]);
+					context.stroke();
+				}
+			} else {
+				context.lineTo(clickX[i], clickY[i]);
+				context.stroke();
+			}
+		}
+
+		function mouseDownEventHandler(e) {
+			paint = true;
+			var x = e.pageX - canvas.offsetLeft;
+			var y = e.pageY - canvas.offsetTop;
+			if (paint) {
+				addClick(x, y, false);
+				drawNew();
+			}
+		}
+
+		function mouseUpEventHandler(e) {
+			context.closePath();
+			paint = false;
+		}
+
+		function mouseMoveEventHandler(e) {
+			var x = e.pageX - canvas.offsetLeft;
+			var y = e.pageY - canvas.offsetTop;
+			if (paint) {
+				addClick(x, y, true);
+				drawNew();
+			}
+		}
+
+		canvas.addEventListener('mouseup', mouseUpEventHandler);
+		canvas.addEventListener('mousemove', mouseMoveEventHandler);
+		canvas.addEventListener('mousedown', mouseDownEventHandler);
+		mouseDownEventHandler(detectEvent);
+	    </script>
+
+	</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>hh</title>
+
+    <style>
+    
+    button{
+        color:black;
+    }
+    
+    #add1{
+        color:green;
+    }
+
+    #delete1{
+        color:red;
+    }
+
+    button.add {
+      height: 30px;
+      width: 30px;
+      border-radius: 30px;
+      border: 1px solid #000;
+      background-color: green;
+  }
+
+  button.sub {
+      height: 30px;
+      width: 30px;
+      border-radius: 30px;
+      border: 1px solid #000;
+      background-color: red;
+    float: right;
+  }
+
+
+    </style>
+
+	<script type="text/javascript">
+		
+		function addField(n)
+{
+    var tr = n.parentNode.parentNode.cloneNode(true);
+    document.getElementById('tbl').appendChild(tr);
+}
+
+function SomeDeleteRowFunction(o) {
+     
+     var p=o.parentNode.parentNode;
+         p.parentNode.removeChild(p);
+    }
+
+   function myFunction() {
+   var a= document.getElementById("name").value;
+   var b=document.getElementById("Phone").value;
+
+   alert("name: "+a+"\n"+"phone:"+b);
+}
+	</script>
+</head>
+<body>
+<table id="tbl" border="1">
+
+<tr bgcolor="blue" >
+<th>Name</th><th>Phone number</th><th>Fetch</th><th>Add/Remove</th>
+</tr>
+
+<tr>
+       <td><input id="name" type="text" valign="middle" /></td>
+        <td><input id="Phone" type="text" valign="middle" /></td> 
+        <td><button style='background-color: #3174c2' onclick="myFunction()" >Fetch</button> </td>    
+        <td><button class='add' onclick='addField(this);'><b>+</b></button><button class='sub' onclick='SomeDeleteRowFunction(this);'><b>-</b></button></td>
+       
+           
+            </div></td>
+
+  </tr>
+
+</table>
+</body>
+</html>
